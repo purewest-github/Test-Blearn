@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<a href="{% url 'list' %}" class="btn btn-secondary" role="button" aria-pressed="true">マイページへ</a>
+{% if user.is_authenticated %}
+<form method="POST" enctype='multipart/form-data'> {% csrf_token %}
+    {{form.as_p}}
+    {% comment %} <p>タイトル:<input type="text" name='title'></p>
+    <p>説明文:<input type="text" name='content'></p>
+    <input type="hidden" name='author' value='{{ user.username }}'>
+    <!-- <p><input type="file" name='sns_image'></p> --> {% endcomment %}
+    <input type="submit" value="作成">
+</form>
+{% else %}
+please login
+<a href="{% url 'login' %}">Loginしてにょ</a>
+{% endif %}
+{% endblock content %}

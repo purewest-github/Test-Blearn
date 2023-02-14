@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="alert alert-primary" role="alert">
+    <h3>detail page</h3>
+    <a href="{% url 'list' %}" class="btn btn-secondary" role="button" aria-pressed="true">マイページへ</a>
+</div>
+
+{% block customcss %}
+<style>
+    #blur_word {
+        filter:blur(5px);
+    }
+    input {
+        display: none;
+    }
+    input:checked + #blur_word {
+        filter:blur(0px);
+    }
+</style>
+
+{% endblock customcss %}
+
+{% endblock header %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="container">
+    <div class="alert alert-success" role="alert">
+        <p>タイトル:{{object.title}}</p>
+        <p>隠したい単語:見たい人は、クリックしてね！</p>
+        <input type="checkbox" id="clickblur">
+        <label id="blur_word" for="clickblur">{{object.blur_word}}</label>
+        <p>説明文:<P>{{object.content}}</p></p>
+
+        {% comment %} <p><img src="{{object.sns_image.url}}" width=300></p> {% endcomment %}
+        {% comment %} <a href="#" class="btn btn-primary" role="button" aria-pressed="true">いいねする</a> {% endcomment %}
+        {% comment %} <a href="{% url 'good' object.pk %}" class="btn btn-primary" role="button" aria-pressed="true">いいねする</a> {% endcomment %}
+        {% comment %} <a href="{% url 'good' object.pk %}" class="btn btn-primary" role="button" aria-pressed="true"><svg {% endcomment %}
+                {% comment %} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" {% endcomment %}
+                {% comment %} class="bi bi-hand-thumbs-up" viewBox="0 0 16 16"> {% endcomment %}
+        <a href="{% url 'update' object.pk %}" class="btn btn-secondary" role="button" aria-pressed="true">編集</a>
+        <a href="{% url 'delete' object.pk %}" class="btn btn-secondary" role="button" aria-pressed="true">削除</a>
+    </div>
+</div>
+{% else %}
+please login
+{% endif %}
+{% endblock content %}
