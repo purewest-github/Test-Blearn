@@ -72,6 +72,18 @@ services:
     # 先にappを起動してからwebを起動する
     depends_on:
       - app
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    # コンテナ内の環境変数を.envを使って設定
+    env_file:
+      - .env.prod
+    # links:
+    #   - db
+    ports:
+      - 4000:80
+    volumes:
+      - ./phpmyadmin/sessions:/sessions
       
 volumes:
   mysql_data:
